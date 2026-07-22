@@ -1,36 +1,49 @@
+import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase/config";
 import { useNavigate } from "react-router-dom";
 
-function Login(){
+function Login() {
+  const navigate = useNavigate();
 
-const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
+  const login = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
 
-return(
+      alert("Login Successful");
 
-<div>
+      navigate("/student");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
-<h1>Smart Campus Login</h1>
+  return (
+    <div style={{ textAlign: "center", marginTop: "100px" }}>
+      <h1>Smart Campus Login</h1>
 
+      <input
+        type="email"
+        placeholder="Email"
+        onChange={(e) => setEmail(e.target.value)}
+      />
 
-<button onClick={()=>navigate("/student")}>
-Student Login
-</button>
+      <br /><br />
 
+      <input
+        type="password"
+        placeholder="Password"
+        onChange={(e) => setPassword(e.target.value)}
+      />
 
-<button onClick={()=>navigate("/faculty")}>
-Faculty Login
-</button>
+      <br /><br />
 
-
-<button onClick={()=>navigate("/admin")}>
-Admin Login
-</button>
-
-
-</div>
-
-)
-
+      <button onClick={login}>Login</button>
+    </div>
+  );
 }
 
 export default Login;
