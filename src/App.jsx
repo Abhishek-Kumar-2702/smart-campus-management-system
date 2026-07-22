@@ -3,6 +3,7 @@ import { auth, db } from './firebase/config';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 
+import Landing from './pages/Landing';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import StudentDashboard from './pages/StudentDashboard';
@@ -14,6 +15,7 @@ function App() {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isSignUpPage, setIsSignUpPage] = useState(false);
+  const [showLanding, setShowLanding] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -23,6 +25,7 @@ function App() {
           if (userDoc.exists()) {
             setUser(currentUser);
             setUserData(userDoc.data());
+            setShowLanding(false);
           } else {
             await signOut(auth);
             setUser(null);
@@ -56,6 +59,11 @@ function App() {
         <p className="animate-pulse text-indigo-400 font-semibold text-sm">Smart Campus Systems...</p>
       </div>
     );
+  }
+
+  // Show landing page first
+  if (showLanding && !user) {
+    return <Landing onGetStarted={() => setShowLanding(false)} />;
   }
 
   // Auth Guard

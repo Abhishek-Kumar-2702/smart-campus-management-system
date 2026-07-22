@@ -52,7 +52,7 @@ const SignUp = ({ onSwitchToLogin }) => {
         <div className="text-center mb-6">
           <h1 
             className="text-3xl font-extrabold bg-clip-text text-transparent"
-            style={{ backgroundImage: 'linear-gradient(to right, #60a5fa, #6366f1)' }}
+            style={{ backgroundImage: 'linear-linear(to right, #60a5fa, #6366f1)' }}
           >
             Smart Campus
           </h1>

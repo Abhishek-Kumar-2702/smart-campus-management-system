@@ -1,13 +1,38 @@
 import React from 'react';
 
 function Sidebar({ activeTab, setActiveTab, role, onLogout }) {
-  const menuItems = [
-    { id: 'overview', label: '📊 Dashboard' },
-    { id: 'attendance', label: '📅 Attendance' },
-    { id: 'timetable', label: '⏰ Timetable' },
-    { id: 'assignments', label: '📚 Assignments' },
-    { id: 'notices', label: '📢 Notice Board' },
-  ];
+  const getMenuItems = () => {
+    switch(role) {
+      case 'student':
+        return [
+          { id: 'overview', label: '📊 Dashboard' },
+          { id: 'attendance', label: '📅 Attendance' },
+          { id: 'timetable', label: '⏰ Time Table' },
+          { id: 'assignments', label: '📚 Assignments' },
+          { id: 'notices', label: '📢 Notice Board' },
+        ];
+      case 'faculty':
+        return [
+          { id: 'overview', label: '📊 Dashboard' },
+          { id: 'attendance', label: '📅 Mark Attendance' },
+          { id: 'assignments', label: '📝 Assignments' },
+          { id: 'timetable', label: '📊 Student Performance' },
+          { id: 'notices', label: '🔔 Notifications' },
+        ];
+      case 'admin':
+        return [
+          { id: 'overview', label: '📊 Dashboard' },
+          { id: 'attendance', label: '👨‍🎓 Students' },
+          { id: 'assignments', label: '📚 Courses' },
+          { id: 'timetable', label: '📊 Reports' },
+          { id: 'notices', label: '⚙️ Settings' },
+        ];
+      default:
+        return [];
+    }
+  };
+
+  const menuItems = getMenuItems();
 
   return (
     <aside className="w-64 bg-slate-800 border-r border-slate-700 flex flex-col justify-between p-4 h-screen">
@@ -16,7 +41,7 @@ function Sidebar({ activeTab, setActiveTab, role, onLogout }) {
           <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center font-bold text-white">
             SC
           </div>
-          <span className="text-lg font-bold bg-linear-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+          <span className="text-lg font-bold text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-indigo-400">
             Smart Campus
           </span>
         </div>
