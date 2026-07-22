@@ -1,36 +1,36 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-import Login from "./pages/Login";
-import StudentDashboard from "./pages/StudentDashboard";
-import FacultyDashboard from "./pages/FacultyDashboard";
-import AdminDashboard from "./pages/AdminDashboard";
+import React, { useState } from 'react';
+import Login from './pages/Login';
+import StudentDashboard from './pages/StudentDashboard';
+import FacultyDashboard from './pages/FacultyDashboard';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
+  const [currentUser, setCurrentUser] = useState(null); // { name: '', role: 'student' | 'faculty' | 'admin' }
+
+  // Login handler
+  const handleLogin = (userRole, userEmail) => {
+    setCurrentUser({
+      name: userEmail.split('@')[0] || 'User',
+      role: userRole,
+    });
+  };
+
+  // Logout handler
+  const handleLogout = () => {
+    setCurrentUser(null);
+  };
+
+  // Render logic based on Role
+  if (!currentUser) {
+    return <Login onLogin={handleLogin} />;
+  }
+
   return (
-    <BrowserRouter>
-
-      <Routes>
-
-        <Route path="/" element={<Login />} />
-
-        <Route 
-          path="/student" 
-          element={<StudentDashboard />} 
-        />
-
-        <Route 
-          path="/faculty" 
-          element={<FacultyDashboard />} 
-        />
-
-        <Route 
-          path="/admin" 
-          element={<AdminDashboard />} 
-        />
-
-      </Routes>
-
-    </BrowserRouter>
+    <div>
+      {currentUser.role === 'student' && <StudentDashboard user={currentUser} onLogout={handleLogout} />}
+      {currentUser.role === 'faculty' && <FacultyDashboard user={currentUser} onLogout={handleLogout} />}
+      {currentUser.role === 'admin' && <AdminDashboard user={currentUser} onLogout={handleLogout} />}
+    </div>
   );
 }
 
