@@ -16,7 +16,7 @@ function Sidebar({ activeTab, setActiveTab, role, onLogout }) {
           <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center font-bold text-white">
             SC
           </div>
-          <span className="text-lg font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+          <span className="text-lg font-bold bg-linear-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
             Smart Campus
           </span>
         </div>
